@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './pages/nav_screen.dart';
+import './pages/rooms_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,8 +12,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: NavScreen(),
+    return MaterialApp(
+      routes: {
+        RoomsScreen.routeName: (ctx) => RoomsScreen()
+      },
+      home: const NavScreen(),
     );
   }
 }

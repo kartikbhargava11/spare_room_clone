@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './home_screen.dart';
+import './rooms_screen.dart';
 
 import '../widgets/custom_tab_bar.dart';
 
@@ -13,7 +14,7 @@ class NavScreen extends StatefulWidget {
 
 class _NavScreenState extends State<NavScreen> {
   List<Widget> _pages = [
-    HomeScreen(),
+    RoomsScreen(),
     Scaffold(),
     Scaffold(),
     Scaffold()

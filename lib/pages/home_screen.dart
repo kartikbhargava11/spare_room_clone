@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../widgets/curve_clipper.dart';
 
+import './rooms_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -44,6 +46,39 @@ class _HomeScreenState extends State<HomeScreen> {
       "icon": Icons.notifications
     },
   ];
+
+  final _blogs = [
+    {
+      "id": 1,
+      "title": "9 hacks to keep your flat cool this summer",
+      "desc": "With the UK currently experiencing a mega heatwave, I think we all can agree we aren't quite built for swealtering weather. Summer in the UK might mean",
+      "tag": "INTERIORS",
+      "image": "",
+    },
+    {
+      "id": 2,
+      "title": "Where can you afford to live?",
+      "desc": "Average rents updated July 2022 Where do you want to live? If you're not sure - or you want to find out where your money goes furthest - you've come to the right",
+      "tag": "NEWS & COMMENT",
+      "image": "",
+    },
+    {
+      "id": 3,
+      "title": "Every UK region experiencing higher rents than last year",
+      "desc": "The UK rental market has been through one hell of a roller coaster since the pandemic hit... and it's not showing signs of stopping any time soon. In February",
+      "tag": "NEWS & COMMENT",
+      "image": "",
+    },
+    {
+      "id": 4,
+      "title": "Is your rent affordable",
+      "desc": "We hear the phrase 'affordable rent' all the time. But what does it actually mean? Is your rent affordable (and more importantly, does it feel affordable)? To",
+      "tag": "NEWS & COMMENT",
+      "image": "",
+    },
+  ];
+
+
   late PageController _pageController;
 
   @override
@@ -185,9 +220,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                             const Spacer(),
-                            const Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.white,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(RoomsScreen.routeName);
+                              },
+                              child: const Icon(
+                                Icons.arrow_forward_ios,
+                                color: Colors.white,
+                              ),
                             )
                           ],
                         ),
@@ -249,9 +289,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                             const Spacer(),
-                            const Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.white,
+                            GestureDetector(
+                              onTap: () {},
+                              child: const Icon(
+                                Icons.arrow_forward_ios,
+                                color: Colors.white,
+                              ),
                             )
                           ],
                         ),
@@ -293,7 +336,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0, bottom: 10.0),
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
             sliver: SliverToBoxAdapter(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -347,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ClipPath(
                                       clipper: CurveClipper(),
                                       child: Container(
-                                        color: Colors.blue[400],
+                                        color: item["completed"] == true ? Colors.grey[400] : Colors.blue[400],
                                       ),
                                     )
                                   ),
@@ -391,9 +434,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        "${item['action']}",
-                                        style: const TextStyle(
-                                          color: Colors.orange,
+                                        item["completed"] == true ? "Completed" : "${item['action']}",
+                                        style: TextStyle(
+                                          color: item["completed"] == true ? Colors.grey : Colors.orange,
                                         ),
                                       ),
                                     ),
@@ -426,7 +469,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Colors.white,
                                 size: 28.0,
                               )
-                            )
+                            ),
                           ],
                         );
                       },
@@ -435,7 +478,134 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             )
-          )
+          ),
+          SliverToBoxAdapter(
+            child: Divider(
+              color: Colors.grey.withOpacity(0.3),
+              thickness: 1.0,
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "BLOG",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      letterSpacing: 0.5
+                    )
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  const Text(
+                    "Go-to flat-sharing tips, advice & fun stuff",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold
+                    )
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  const Text(
+                    "Area guides, practical renting advice and tips on living with flatmates... we've got it all on our blog, with a good dose of banter too.",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      height: 1.3
+                    )
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  SizedBox(
+                    height: 400,
+                    child: PageView.builder(
+                      padEnds: false,
+                      controller: _pageController,
+                      itemCount: _blogs.length,
+                      itemBuilder: (ctx, index) {
+                        final blog = _blogs[index];
+                        return Card(
+                          child: Stack(
+                            children: [
+                              Container(
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                      "https://media.istockphoto.com/photos/terraced-houses-in-england-picture-id171345969?k=20&m=171345969&s=612x612&w=0&h=Z4O1pXqAoqotXHCh7pbHRdb4SgfFyLDVJZMx-76WABM="
+                                    ),
+                                    fit: BoxFit.cover
+                                  )
+                                ),
+                              ),
+                              Container(
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Colors.black54,
+                                      Colors.black87,
+                                    ]
+                                  )
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.circular(5.0),
+                                      ),
+                                      child: Text(
+                                          "${blog['tag']}",
+                                          style: const TextStyle(
+                                              color: Colors.white
+                                          )
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Text(
+                                      "${blog['title']}",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 5.0,
+                                    ),
+                                    Text(
+                                      "${blog['desc']}",
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
+            )
+          ),
+
         ]
       )
     );
