@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 import './pages/nav_screen.dart';
-import './pages/rooms_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,11 +11,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        RoomsScreen.routeName: (ctx) => RoomsScreen()
-      },
-      home: const NavScreen(),
+    return const CupertinoApp(
+      home: NavScreen(),
     );
   }
 }

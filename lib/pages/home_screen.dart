@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/curve_clipper.dart';
@@ -95,19 +96,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.lightBlue[900],
-        titleTextStyle: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w500,
-          letterSpacing: -1.2,
-          fontSize: 24.0
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        backgroundColor: Colors.blue.shade900,
+        middle: const Text(
+          "SpareRoom",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+            letterSpacing: -1.2,
+            fontSize: 24.0
+          )
         ),
-        centerTitle: true,
-        title: const Text("SpareRoom"),
       ),
-      body: CustomScrollView(
+      child: CustomScrollView(
         slivers: [
           SliverPadding(
             padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0, bottom: 10.0),
@@ -222,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             const Spacer(),
                             GestureDetector(
                               onTap: () {
-                                Navigator.of(context).pushNamed(RoomsScreen.routeName);
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => RoomsScreen()));
                               },
                               child: const Icon(
                                 Icons.arrow_forward_ios,
@@ -605,7 +607,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             )
           ),
-
         ]
       )
     );

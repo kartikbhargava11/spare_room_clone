@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
+import '../widgets/room_card.dart';
 
 class RoomsScreen extends StatelessWidget {
-  static const routeName = "/rooms";
-
-  final _rooms = [
+  final rooms = [
     {
       "id": 1,
       "image": "https://images.oyoroomscdn.com/uploads/hotel_image/15061/d7ddce6041bc8f83.jpg",
@@ -80,23 +81,29 @@ class RoomsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.lightBlue[900],
-        titleTextStyle: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w500,
-          letterSpacing: -1.2,
-          fontSize: 24.0
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        automaticallyImplyLeading: false,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            CupertinoIcons.arrow_left,
+            color: Colors.white,
+            size: 24.0,
+          ),
         ),
-        centerTitle: true,
-        title: Column(
+        backgroundColor: Colors.blue.shade800,
+        middle: Column(
           children: const [
             Text(
               "Colchester",
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
+                letterSpacing: -1.2,
+                color: Colors.white,
               )
             ),
             Text(
@@ -104,171 +111,31 @@ class RoomsScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w400,
+                letterSpacing: -1.2,
+                color: Colors.white,
               )
             )
           ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.location_on
-            ),
-          )
-        ],
+        trailing: GestureDetector(
+          onTap: () {},
+          child: const Icon(
+            CupertinoIcons.location_solid,
+            color: Colors.white,
+            size: 24,
+          ),
+        ),
       ),
-      body: Stack(
+      child: Stack(
         children: [
-          CustomScrollView(
-            slivers: [
-              SliverPadding(
-                padding: const EdgeInsets.all(12.0),
-                sliver: SliverToBoxAdapter(
-                  child: Column(
-                    children: _rooms.map((element) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 12.0),
-                        height: 380,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            side: const BorderSide(color: Colors.blue, width: 1.5),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Expanded(
-                                child: ClipRRect(
-                                  borderRadius: const BorderRadius.only(topRight: Radius.circular(15.0), topLeft: Radius.circular(15.0)),
-                                  child: Image(
-                                    image: NetworkImage(
-                                        "${element['image']}"
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${element['title']}",
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        )
-                                      ),
-                                      const SizedBox(
-                                        height: 5.0,
-                                      ),
-                                      Text(
-                                          "${element['desc']}",
-                                          style: const TextStyle(
-                                              color: Colors.grey
-                                          )
-                                      ),
-                                      const SizedBox(
-                                        height: 15.0,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              const Text(
-                                                  "Rent",
-                                                  style: TextStyle(
-                                                    color: Colors.grey,
-                                                  )
-                                              ),
-                                              Text(
-                                                  "${element['rent']}"
-                                              )
-                                            ],
-                                          ),
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              const Text(
-                                                  "Available",
-                                                  style: TextStyle(
-                                                    color: Colors.grey,
-                                                  )
-                                              ),
-                                              Text(
-                                                  "${element['available']}"
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 15.0,
-                                      ),
-                                      Divider(
-                                        color: Colors.grey[300],
-                                      ),
-                                      const SizedBox(
-                                        height: 10.0,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {},
-                                            child: Row(
-                                              children: [
-                                                Icon(
-                                                  element['saved'] == true ? Icons.favorite : Icons.favorite_border,
-                                                  color: element['saved'] == true ? Colors.orange : Colors.grey,
-                                                ),
-                                                const SizedBox(
-                                                  width: 5.0,
-                                                ),
-                                                Text(
-                                                  element['saved'] == true ? "Saved" : "Save",
-                                                  style: TextStyle(
-                                                    color: element['saved'] == true ? Colors.orange : Colors.grey,
-                                                    fontWeight: FontWeight.w600
-                                                  )
-                                                )
-                                              ],
-                                            )
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {},
-                                            child: Row(
-                                              children: const [
-                                                Icon(
-                                                  Icons.hide_source,
-                                                ),
-                                                SizedBox(
-                                                  width: 5.0,
-                                                ),
-                                                Text(
-                                                  "Hide"
-                                                )
-                                              ],
-                                            )
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                )
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    }).toList()
-                  )
-                ),
-              ),
-            ],
+          SingleChildScrollView(
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 50.0),
+              padding: const EdgeInsets.all(12.0),
+              child: RoomCard(
+                rooms: rooms,
+              )
+            ),
           ),
           Positioned(
             left: 20,
